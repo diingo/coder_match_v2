@@ -248,9 +248,10 @@ module GladiatorMatch
       # Interest #
       # # # # #  #
 
-      def create_interest(attrs)
-        ar_interest = Interest.create(attrs)
-        entity_interest = GladiatorMatch::Interest.new(ar_interest.attributes)
+      def persist_interest(interest)
+        ar_interest = Interest.create(interest.instance_values)
+        interest.id = ar_interest.id
+        interest
       end
 
       def get_interest(iid)

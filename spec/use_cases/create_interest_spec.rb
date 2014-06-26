@@ -5,7 +5,7 @@ describe GladiatorMatch::CreateInterest do
   let(:result) { described_class.run(@params) }
 
   before do
-    GladiatorMatch.db.clear_everything
+    # GladiatorMatch.db.clear_everything
     @params = { expertise: 'beginner', name: 'haskell'}
   end
 
@@ -32,6 +32,8 @@ describe GladiatorMatch::CreateInterest do
   end
 
   it 'creates an interest' do
+    expect(GladiatorMatch.db).to receive(:persist_interest)
+
     expect(result.success?).to eq(true)
 
     expect(result.interest.name).to eq('haskell')

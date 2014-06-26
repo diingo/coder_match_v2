@@ -217,24 +217,20 @@ shared_examples 'a database' do
     end
   end
 
-  describe 'Interests', pending: true do
+  describe 'Interests' do
 
-    it 'creates an interest' do
-      interest = db.create_interest(name: 'haskell', expertise: 'beginner')
+    it 'persists and gets an interest' do
+      interest = GladiatorMatch::Interest.new(name: 'haskell', expertise: 'beginner')
+      persisted_interest = db.persist_interest(interest)
+      expect(persisted_interest.id).to_not be_nil
 
-      expect(interest.name).to eq('haskell')
-      expect(interest.expertise).to eq('beginner')
-    end
-
-    it 'gets an interest' do
-      interest = db.create_interest(name: 'java', expertise: 'beginner')
       retrieved_interest = db.get_interest(interest.id)
-
-      expect(retrieved_interest.name).to eq('java')
+      expect(retrieved_interest.name).to eq('haskell')
+      expect(retrieved_interest.expertise).to eq('beginner')
     end
   end
 
-  describe 'Queries', pending: true do
+  describe 'Queries' do
 
     before do
       @group_1 = db.create_group(users: [toad, mario, luigi], topic: 'haskell')
